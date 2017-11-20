@@ -67,3 +67,20 @@ module "vpc" {
     SubnetType = "public"
   }
 }
+
+
+# ----------------------
+# Bastion Security Group
+# ----------------------
+module "bastion_security_group" {
+  source = "../modules/bastion-security-group"
+
+  customer_name         = "${var.customer_name}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  vpc_cidr_block        = "${module.vpc.vpc_cidr_block}"
+  ssh_port              = "${var.bastion_ssh_port}"
+  external_subnet_range = "${var.bastion_external_subnet_range}"
+}
+
+
