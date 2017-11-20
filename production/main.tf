@@ -84,3 +84,39 @@ module "bastion_security_group" {
 }
 
 
+# -------
+# Bastion
+# -------
+module "bastion" {
+  source = "git::https://github.com/brentwg/terraform-aws-bastion.git?ref=1.0"
+
+  customer_name       = "${var.customer_name}"
+  environment         = "${var.environment}"
+
+  # Route53
+  bastion_zone_id     = "${data.aws_route53_zone.my_domain.zone_id}"
+  bastion_domain_name = "bastion.${var.domain_name}"
+  bastion_zone_ttl    = "${var.bastion_zone_ttl}"
+
+  # Launch config
+  bastion_region        = "${var.region}"      
+  bastion_image_id      = "${var.bastion_image_id}"
+  bastion_instance_type = "${var.bastion_instance_type}"
+  bastion_key_name      = "${var.key_pair_name}"
+
+  bastion_security_groups   = [
+    "${module.bastion_security_group.bastion_security_group_id}"
+  ]
+  
+  bastion_ebs_optimized     = "${var.bastion_ebs_optimized}"
+  bastion_enable_monitoring = "${var.bastion_enable_monitoring}"
+  bastion_volume_type       = "${var.bastion_volume_type}"
+  bastion_volume_size       = "${var.bastion_volume_size}"
+
+  # ASG
+  bastion_max_size         = "${var.bastion_max_size}"
+  bastion_min_size         = "${var.bastion_min_size}"
+  bastion_desired_capacity = "${var.bastion_desired_capacity}"
+
+  bastion_asg_subnets      = ["${module.vpc.public_subnets}"]
+}
