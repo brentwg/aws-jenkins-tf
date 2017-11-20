@@ -1,0 +1,4 @@
+aws.env.*
+.terraform
+terraform.tfstate
+*.tfstate*
