@@ -120,3 +120,16 @@ module "bastion" {
 
   bastion_asg_subnets      = ["${module.vpc.public_subnets}"]
 }
+
+
+# ----------------------
+# IAM - ECS Service Role
+# ----------------------
+module "ecs_service_role" {
+  source = "../modules/ecs-service-role"
+
+  customer_name            = "${var.customer_name}"
+  environment              = "${var.environment}"
+}
+
+
