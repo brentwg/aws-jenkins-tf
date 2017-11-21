@@ -133,3 +133,12 @@ module "ecs_service_role" {
 }
 
 
+# --------------------------
+# IAM - EC2 Instance Profile
+# --------------------------
+module "ec2_instance_profile" {
+  source = "../modules/ec2-instance-profile"
+
+  customer_name            = "${var.customer_name}"
+  environment              = "${var.environment}"
+}
