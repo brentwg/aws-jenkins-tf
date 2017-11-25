@@ -206,8 +206,16 @@ module "efs" {
 # -----------
 # Jenkins ELB
 # -----------
+module "jenkins_elb" {
+  source = "../modules/jenkins-elb"
 
-
+  customer_name       = "${var.customer_name}"
+  environment         = "${var.environment}"
+  elb_subnets         = ["{module.vpc.private_subnets}"]
+  elb_security_groups = ["{module.jenkins_elb_security_group.jenkins_elb_security_group_id}"]
+  int_web_port        = "${var.jenkins_web_port}"
+  ext_web_port        = "${var.jenkins_ext_web_port}"
+}
 
 
 # -------------------
