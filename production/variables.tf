@@ -177,3 +177,10 @@ variable "jenkins_ext_web_port" {
   description = "Default external port for Jenkins web services"
   default     = "80"
 }
+
+
+# EFS
+variable "efs_port" {
+  description = "Default port for EFS"
+  default     = "2049"
+}

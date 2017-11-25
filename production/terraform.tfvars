@@ -51,3 +51,7 @@ bastion_desired_capacity = "1"
 jenkins_web_port     = "8080"
 jenkins_jnlp_port    = "50000"
 jenkins_ext_web_port = "80"
+
+
+# EFS
+efs_port = "2049"

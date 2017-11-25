@@ -172,3 +172,17 @@ module "jenkins_elb_security_group" {
   vpc_id                = "${module.vpc.vpc_id}"
   jenkins_ext_web_port  = "${var.jenkins_ext_web_port}"
 }
+
+
+# ------------------
+# EFS Security Group
+# ------------------
+module "efs_security_group" {
+  source = "../modules/efs-security-group"
+
+  customer_name         = "${var.customer_name}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  vpc_cidr_block        = "${module.vpc.vpc_cidr_block}"
+  efs_port              = "${var.efs_port}"
+}
