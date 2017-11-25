@@ -201,3 +201,73 @@ module "efs" {
   subnet_count          = "${length(var.vpc_private_subnets)}"
   security_groups       = ["${module.efs_security_group.efs_security_group_id}"]
 }
+
+
+# -----------
+# Jenkins ELB
+# -----------
+
+
+
+
+# -------------------
+# Jenkins ECS Cluster
+# -------------------
+
+
+
+
+# ------------------------------
+# Jenkins Master Task Definition
+# ------------------------------
+
+
+
+# -------------------
+# Jenkins ECS Service
+# -------------------
+
+
+
+# --------------------------------
+# Jenkins ECS Launch Configuration
+# --------------------------------
+
+
+
+# -----------
+# Jenkins ASG
+# -----------
+
+
+
+# -------------------------------
+# Jenkins Cluster Scale Up Policy
+# -------------------------------
+
+
+
+
+# ------------------------------
+# Jenkins Cluster Scale Up Alarm
+# ------------------------------
+
+
+
+# ---------------------------------
+# Jenkins Cluster Scale Down Policy
+# ---------------------------------
+
+
+
+# --------------------------------
+# Jenkins Cluster Scale Down Alarm
+# --------------------------------
+
+
+
+
+# ------------------------
+# OUTPUT - Jenkins ELB URL
+# ------------------------
+
