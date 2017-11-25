@@ -184,3 +184,10 @@ variable "efs_port" {
   description = "Default port for EFS"
   default     = "2049"
 }
+
+
+# Jenkins ELB
+variable "jenkins_elb_cookie_expiration_period" {
+  description = "The time period after which the Jenkins session cookie should be considered stale, expressed in seconds."
+  default     = ""
+}

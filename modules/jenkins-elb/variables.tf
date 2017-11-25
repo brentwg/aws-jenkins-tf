@@ -60,3 +60,8 @@ variable "elb_health_timeout" {
   description = ""
   default     = "5"
 }
+
+variable "elb_cookie_expiration_period" {
+  description = ""
+  default     = ""
+}

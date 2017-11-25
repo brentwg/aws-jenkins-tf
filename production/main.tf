@@ -215,6 +215,8 @@ module "jenkins_elb" {
   elb_security_groups = ["{module.jenkins_elb_security_group.jenkins_elb_security_group_id}"]
   int_web_port        = "${var.jenkins_web_port}"
   ext_web_port        = "${var.jenkins_ext_web_port}"
+  
+  elb_cookie_expiration_period = "${var.jenkins_elb_cookie_expiration_period}"
 }
 
 

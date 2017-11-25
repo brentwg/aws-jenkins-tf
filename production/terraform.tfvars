@@ -55,3 +55,7 @@ jenkins_ext_web_port = "80"
 
 # EFS
 efs_port = "2049"
+
+
+# Jenkins ELB
+jenkins_elb_cookie_expiration_period = "3600"
