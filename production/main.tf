@@ -186,3 +186,18 @@ module "efs_security_group" {
   vpc_cidr_block        = "${module.vpc.vpc_cidr_block}"
   efs_port              = "${var.efs_port}"
 }
+
+
+# ---
+# EFS
+# ---
+module "efs" {
+  source = "git::https://github.com/brentwg/terraform-aws-efs.git?ref=1.0"
+
+  customer_name         = "${var.customer_name}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  subnet_ids            = "${module.vpc.private_subnets}"
+  subnet_count          = "${length(var.vpc_private_subnets)}"
+  security_groups       = ["${module.efs_security_group.efs_security_group_id}"]
+}
