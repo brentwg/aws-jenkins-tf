@@ -160,3 +160,15 @@ variable "vpc_enable_dynamodb_endpoint" {
   description = "enable dynamodb endpoint (true/false)"
   default     = false
 }
+
+
+# Jenkins
+variable "jenkins_web_port" {
+  description = "Default port for Jenkins web services"
+  default     = "8080"
+}
+
+variable "jenkins_jnlp_port" {
+  description = "Default port for Jenkins JNLP slave agents"
+  default     = "50000"
+}

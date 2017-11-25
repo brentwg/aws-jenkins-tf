@@ -142,3 +142,20 @@ module "ec2_instance_profile" {
   customer_name            = "${var.customer_name}"
   environment              = "${var.environment}"
 }
+
+
+# ----------------------
+# Jenkins Security Group
+# ----------------------
+module "jenkins_security_group" {
+  source = "../modules/jenkins-security-group"
+
+  customer_name         = "${var.customer_name}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  vpc_cidr_block        = "${module.vpc.vpc_cidr_block}"
+  ssh_port              = "${var.bastion_ssh_port}"
+  jenkins_web_port      = "${var.jenkins_web_port}"
+  jenkins_jnlp_port     = "${var.jenkins_jnlp_port}"
+  external_subnet_range = "${var.bastion_external_subnet_range}"
+}

@@ -45,3 +45,8 @@ bastion_volume_size       = "8"
 bastion_max_size         = "1"
 bastion_min_size         = "1"
 bastion_desired_capacity = "1"
+
+
+# Jenkins
+jenkins_web_port  = "8080"
+jenkins_jnlp_port = "50000"
