@@ -159,3 +159,16 @@ module "jenkins_security_group" {
   jenkins_jnlp_port     = "${var.jenkins_jnlp_port}"
   external_subnet_range = "${var.bastion_external_subnet_range}"
 }
+
+
+# --------------------------
+# Jenkins ELB Security Group
+# --------------------------
+module "jenkins_elb_security_group" {
+  source = "../modules/jenkins-elb-security-group"
+
+  customer_name         = "${var.customer_name}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  jenkins_ext_web_port  = "${var.jenkins_ext_web_port}"
+}

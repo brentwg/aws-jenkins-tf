@@ -172,3 +172,8 @@ variable "jenkins_jnlp_port" {
   description = "Default port for Jenkins JNLP slave agents"
   default     = "50000"
 }
+
+variable "jenkins_ext_web_port" {
+  description = "Default external port for Jenkins web services"
+  default     = "80"
+}
