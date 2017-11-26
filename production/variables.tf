@@ -191,3 +191,30 @@ variable "jenkins_elb_cookie_expiration_period" {
   description = "The time period after which the Jenkins session cookie should be considered stale, expressed in seconds."
   default     = ""
 }
+
+
+# ECS
+variable "ecs_cluster_name" {
+  description = "The name of the ECS cluster"
+  default     = ""
+}
+
+variable "ecs_task_family" {
+  description = "A unique name for your task definition"
+  default     = ""
+}
+
+variable "ecs_task_network_mode" {
+  description = "The Docker networking mode to use for the containers in the task. The valid values are none, bridge, and host"
+  default     = ""
+}
+
+variable "ecs_task_volume_name" {
+  description = "The name of the volume. This name is referenced in the sourceVolume parameter of container definition in the mountPoints section"
+  default     = ""
+}
+
+variable "ecs_task_volume_host_path" {
+  description = "The path on the host container instance that is presented to the container. If not set, ECS will create a nonpersistent data volume that starts empty and is deleted after the task has finished"
+  default     = ""
+}

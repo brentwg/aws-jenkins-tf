@@ -125,11 +125,79 @@ module "bastion" {
 # ----------------------
 # IAM - ECS Service Role
 # ----------------------
-module "ecs_service_role" {
-  source = "../modules/ecs-service-role"
 
-  customer_name            = "${var.customer_name}"
-  environment              = "${var.environment}"
+/*
+  This should be it's own module. But I need to reference a resource in order
+  to prevent a potential race condition during ECS service deletion. See this
+  NOTE:
+
+    To prevent a race condition during service deletion, make sure to set 
+    depends_on to the related aws_iam_role_policy; otherwise, the policy may be 
+    destroyed too soon and the ECS service will then get stuck in the DRAINING 
+    state.
+
+  Original module preserved here for posterity.
+
+  module "ecs_service_role" {
+    source = "../modules/ecs-service-role"
+
+    customer_name            = "${var.customer_name}"
+    environment              = "${var.environment}"
+  }
+*/
+
+# ----------------
+# ECS Service Role
+# ----------------
+resource "aws_iam_role" "ecs_service_role" {
+  name = "${var.customer_name}_${var.environment}_ecs_service_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "ecs.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+# -----------------------
+# ECS Service Role Policy
+# -----------------------
+resource "aws_iam_role_policy" "ecs_service_policy" {
+  name = "${var.customer_name}_${var.environment}_s3_access_policy"
+  role = "${aws_iam_role.ecs_service_role.id}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+            "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+            "elasticloadbalancing:DeregisterTargets",
+            "elasticloadbalancing:Describe*",
+            "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+            "elasticloadbalancing:RegisterTargets",
+            "ec2:Describe*",
+            "ec2:AuthorizeSecurityGroupIngress"
+          ],      
+          "Resource": "*"
+      }
+  ]
+}
+EOF
 }
 
 
@@ -211,8 +279,8 @@ module "jenkins_elb" {
 
   customer_name       = "${var.customer_name}"
   environment         = "${var.environment}"
-  elb_subnets         = ["{module.vpc.private_subnets}"]
-  elb_security_groups = ["{module.jenkins_elb_security_group.jenkins_elb_security_group_id}"]
+  elb_subnets         = ["${module.vpc.private_subnets}"]
+  elb_security_groups = ["${module.jenkins_elb_security_group.jenkins_elb_security_group_id}"]
   int_web_port        = "${var.jenkins_web_port}"
   ext_web_port        = "${var.jenkins_ext_web_port}"
   
@@ -220,23 +288,82 @@ module "jenkins_elb" {
 }
 
 
+
+/*
+  NOTE: All of the ECS resources should be in their own module. But I require
+  a 'depends_on' (See Notes from 'IAM - ECS Service Role' above), so here we 
+  are.
+*/
+
 # -------------------
 # Jenkins ECS Cluster
 # -------------------
-
-
+resource "aws_ecs_cluster" "ecs_cluster" {
+  name = "${var.ecs_cluster_name}"
+}
 
 
 # ------------------------------
 # Jenkins Master Task Definition
 # ------------------------------
+resource "aws_ecs_task_definition" "ecs_task_definition" {
+  family       = "${var.ecs_task_family}"
+  network_mode = "${var.ecs_task_network_mode}"
+  
+  volume {
+    name      = "${var.ecs_task_volume_name}"
+    host_path = "${var.ecs_task_volume_host_path}"
+  }
 
+  container_definitions = <<EOF
+[
+  {
+    "name": "jenkins-master",
+    "image": "DockerImage",
+    "mountPoints": [
+      {
+        "sourceVolume": "data-volume",
+        "containerPath": "/var/jenkins_home"
+      }
+    ],
+    "essential": true,
+    "cpu": 1024,
+    "memory": 992,
+    "portMappings": [
+      {
+        "hostPort": 8080,
+        "containerPort": 8080,
+        "protocol": "tcp"
+      },
+      {
+        "hostPort": 50000,
+        "containerPort": 50000,
+        "protocol": "tcp"
+      }
+    ]
+  }
+]
+EOF
+}
 
 
 # -------------------
 # Jenkins ECS Service
 # -------------------
+resource "aws_ecs_service" "ecs_service" {
+  name            = "jenkins_service"
+  cluster         = "${aws_ecs_cluster.ecs_cluster.id}"
+  task_definition = "${aws_ecs_task_definition.ecs_task_definition.arn}"
+  desired_count   = "1"
+  iam_role        = "${aws_iam_role.ecs_service_role.arn}"
+  depends_on      = ["aws_iam_role_policy.ecs_service_policy"]
 
+  load_balancer {
+    elb_name = "${module.jenkins_elb.jenkins_elb_name}"
+    container_name = "jenkins-master"
+    container_port = "8080"
+  }
+}
 
 
 # --------------------------------

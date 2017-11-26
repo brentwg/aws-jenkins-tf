@@ -59,3 +59,12 @@ efs_port = "2049"
 
 # Jenkins ELB
 jenkins_elb_cookie_expiration_period = "3600"
+
+
+# ECS
+ecs_cluster_name = "jenkins-cluster"
+
+ecs_task_family           = "jenkins-master"
+ecs_task_network_mode     = "bridge"
+ecs_task_volume_name      = "data-volume"
+ecs_task_volume_host_path = "/data/"
