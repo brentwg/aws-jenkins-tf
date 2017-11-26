@@ -26,7 +26,7 @@ EOF
 # -----------------------
 # ECS Service Role Policy
 # -----------------------
-resource "aws_iam_role_policy" "ec2_service_policy" {
+resource "aws_iam_role_policy" "ecs_service_policy" {
   name = "${var.customer_name}_${var.environment}_s3_access_policy"
   role = "${aws_iam_role.ecs_service_role.id}"
 
