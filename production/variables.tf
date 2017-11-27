@@ -204,6 +204,11 @@ variable "ecs_task_family" {
   default     = ""
 }
 
+variable "ecs_task_image" {
+  description = ""
+  default     = ""
+}
+
 variable "ecs_task_network_mode" {
   description = "The Docker networking mode to use for the containers in the task. The valid values are none, bridge, and host"
   default     = ""
@@ -216,5 +221,10 @@ variable "ecs_task_volume_name" {
 
 variable "ecs_task_volume_host_path" {
   description = "The path on the host container instance that is presented to the container. If not set, ECS will create a nonpersistent data volume that starts empty and is deleted after the task has finished"
+  default     = ""
+}
+
+variable "ecs_task_container_path" {
+  description = ""
   default     = ""
 }

@@ -295,6 +295,7 @@ module "jenkins_elb" {
   are.
 */
 
+
 # -------------------
 # Jenkins ECS Cluster
 # -------------------
@@ -318,12 +319,12 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   container_definitions = <<EOF
 [
   {
-    "name": "jenkins-master",
-    "image": "DockerImage",
+    "name": "${var.ecs_task_family}",
+    "image": "${var.ecs_task_image}",
     "mountPoints": [
       {
-        "sourceVolume": "data-volume",
-        "containerPath": "/var/jenkins_home"
+        "sourceVolume": "${var.ecs_task_volume_name}",
+        "containerPath": "${var.ecs_task_container_path}"
       }
     ],
     "essential": true,
@@ -360,8 +361,8 @@ resource "aws_ecs_service" "ecs_service" {
 
   load_balancer {
     elb_name = "${module.jenkins_elb.jenkins_elb_name}"
-    container_name = "jenkins-master"
-    container_port = "8080"
+    container_name = "${var.ecs_task_family}"
+    container_port = "${var.jenkins_web_port}"
   }
 }
 
