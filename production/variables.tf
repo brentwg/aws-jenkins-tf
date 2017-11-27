@@ -205,7 +205,7 @@ variable "ecs_task_family" {
 }
 
 variable "ecs_task_image" {
-  description = ""
+  description = "The specified Docker image to use"
   default     = ""
 }
 
@@ -225,6 +225,6 @@ variable "ecs_task_volume_host_path" {
 }
 
 variable "ecs_task_container_path" {
-  description = ""
+  description = "The path on the container that is presented to the host container instance"
   default     = ""
 }
