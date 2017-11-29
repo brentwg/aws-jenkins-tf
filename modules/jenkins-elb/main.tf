@@ -32,8 +32,8 @@ resource "aws_elb" "this" {
 # ---------------------
 # ELB Stickiness Policy
 # ---------------------
-resource "aws_lb_cookie_stickiness_policy" "foo" {
-  name                     = "${var.customer_name}_${var.environment}_elb_stickiness_policy"
+resource "aws_lb_cookie_stickiness_policy" "this" {
+  name                     = "${var.customer_name}-${var.environment}-elb-stickiness-policy"
   load_balancer            = "${aws_elb.this.id}"
   lb_port                  = "${var.ext_web_port}"
   cookie_expiration_period = "${var.elb_cookie_expiration_period}"
