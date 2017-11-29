@@ -77,7 +77,7 @@ ecs_user_data_efs_mountpoint = "/data"
 ecs_user_data_efs_owner      = "1000"
 
 # ECS - launch configuration
-ecs_lc_image_id      = "ami-6e56780b"
+ecs_lc_image_id      = "ami-7114c909"
 ecs_lc_instance_type = "t2.micro"
 
 ecs_lc_data_block_device_name = "/dev/xvdz"

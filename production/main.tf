@@ -218,14 +218,14 @@ module "ec2_instance_profile" {
 module "jenkins_security_group" {
   source = "../modules/jenkins-security-group"
 
-  customer_name         = "${var.customer_name}"
-  environment           = "${var.environment}"
-  vpc_id                = "${module.vpc.vpc_id}"
-  vpc_cidr_block        = "${module.vpc.vpc_cidr_block}"
-  ssh_port              = "${var.bastion_ssh_port}"
-  jenkins_web_port      = "${var.jenkins_web_port}"
-  jenkins_jnlp_port     = "${var.jenkins_jnlp_port}"
-  external_subnet_range = "${var.bastion_external_subnet_range}"
+  customer_name          = "${var.customer_name}"
+  environment            = "${var.environment}"
+  vpc_id                 = "${module.vpc.vpc_id}"
+  vpc_cidr_block         = "${module.vpc.vpc_cidr_block}"
+  ssh_port               = "${var.bastion_ssh_port}"
+  jenkins_web_port       = "${var.jenkins_web_port}"
+  jenkins_jnlp_port      = "${var.jenkins_jnlp_port}"
+  bastion_security_group = "${module.bastion_security_group.bastion_security_group_id}"
 }
 
 
@@ -260,7 +260,7 @@ module "efs_security_group" {
 # EFS
 # ---
 module "efs" {
-  source = "git::https://github.com/brentwg/terraform-aws-efs.git?ref=1.0"
+  source = "git::https://github.com/brentwg/terraform-aws-efs.git?ref=1.0.1"
 
   customer_name         = "${var.customer_name}"
   environment           = "${var.environment}"
@@ -442,7 +442,6 @@ module "asg" {
     },
   ]
 }
-
 
 
 
