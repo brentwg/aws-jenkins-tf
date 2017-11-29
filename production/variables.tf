@@ -228,3 +228,13 @@ variable "ecs_task_container_path" {
   description = "The path on the container that is presented to the host container instance"
   default     = ""
 }
+
+variable "ecs_user_data_efs_mountpoint" {
+  description = "EFS mount point on the ECS instance"
+  default     = ""
+}
+
+variable "ecs_user_data_efs_owner" {
+  description = "EFS mount point owner on the ECS instance"
+  default     = ""
+}

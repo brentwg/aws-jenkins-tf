@@ -70,3 +70,6 @@ ecs_task_volume_name      = "data-volume"
 ecs_task_volume_host_path = "/data/"
 ecs_task_image            = "DockerImage"
 ecs_task_container_path   = "/var/jenkins_home"
+
+ecs_user_data_efs_mountpoint = "/data"
+ecs_user_data_efs_owner      = "1000"

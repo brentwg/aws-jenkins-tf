@@ -367,15 +367,84 @@ resource "aws_ecs_service" "ecs_service" {
 }
 
 
-# --------------------------------
-# Jenkins ECS Launch Configuration
-# --------------------------------
+# ------------
+# Auto Scaling
+# ------------
+data "template_file" "user_data_jenkins_ecs" {
+  template = "${file("user_data_jenkins_ecs.sh")}"
+
+  vars {
+    ecs_cluster_name     = "${var.ecs_cluster_name}"
+    efs_mountpoint       = "${var.ecs_user_data_efs_mountpoint}"
+    aws_region           = "${var.region}"
+    efs_filesystem_id    = "${module.efs.efs_filesystem_id}"
+    efs_mountpoint_owner = "${var.ecs_user_data_efs_owner}"
+  }
+}
 
 
+module "asg" {
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git?ref=v1.2.0"
 
-# -----------
-# Jenkins ASG
-# -----------
+  # Launch Configuration
+  lc_name              = "${var.customer_name}-${var.environment}_ecs_launch_configuration"
+  image_id             = "ami-f5fc2c8d"
+  instance_type        = "t2.micro"
+  iam_instance_profile = "${module.ec2_instance_profile.ec2_instance_profile_arn}"
+  key_name             = "${var.key_pair_name}"
+  
+  security_groups = ["${module.jenkins_security_group.jenkins_security_group_id}"]
+  
+  associate_public_ip_address = "false"
+
+  user_data = "${data.template_file.user_data_jenkins_ecs.rendered}"
+
+  ebs_block_device = [
+    {
+      device_name           = "/dev/xvdz"
+      volume_type           = "gp2"
+      volume_size           = "24"
+      delete_on_termination = true
+    },
+  ]
+
+  root_block_device = [
+    {
+      volume_size = "12"
+      volume_type = "gp2"
+    },
+  ]
+
+
+# Auto scaling group
+  asg_name                  = "${var.customer_name}_${var.environment}_asg"
+  vpc_zone_identifier       = ["${module.vpc.private_subnets}"]
+  health_check_type         = "EC2"
+  min_size                  = 2
+  max_size                  = 5
+  desired_capacity          = 2
+  wait_for_capacity_timeout = 0
+
+  tags = [
+    {
+      key                 = "Name"
+      value               = "${var.customer_name}_${var.environment}_asg"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Environment"
+      value               = "${var.environment}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Terraform"
+      value               = "true"
+      propagate_at_launch = true
+    },
+  ]
+}
+
+
 
 
 
