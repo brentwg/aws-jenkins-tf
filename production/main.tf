@@ -388,8 +388,8 @@ module "asg" {
 
   # Launch Configuration
   lc_name              = "${var.customer_name}-${var.environment}_ecs_launch_configuration"
-  image_id             = "ami-f5fc2c8d"
-  instance_type        = "t2.micro"
+  image_id             = "${var.ecs_lc_image_id}"
+  instance_type        = "${var.ecs_lc_instance_type}"
   iam_instance_profile = "${module.ec2_instance_profile.ec2_instance_profile_arn}"
   key_name             = "${var.key_pair_name}"
   
@@ -401,29 +401,28 @@ module "asg" {
 
   ebs_block_device = [
     {
-      device_name           = "/dev/xvdz"
-      volume_type           = "gp2"
-      volume_size           = "24"
+      device_name           = "${var.ecs_lc_data_block_device_name}"
+      volume_type           = "${var.ecs_lc_data_block_device_type}"
+      volume_size           = "${var.ecs_lc_data_block_device_size}"
       delete_on_termination = true
     },
   ]
 
   root_block_device = [
     {
-      volume_size = "12"
-      volume_type = "gp2"
+      volume_type = "${var.ecs_lc_root_device_type}"
+      volume_size = "${var.ecs_lc_root_device_size}"
     },
   ]
-
 
 # Auto scaling group
   asg_name                  = "${var.customer_name}_${var.environment}_asg"
   vpc_zone_identifier       = ["${module.vpc.private_subnets}"]
-  health_check_type         = "EC2"
-  min_size                  = 2
-  max_size                  = 5
-  desired_capacity          = 2
-  wait_for_capacity_timeout = 0
+  health_check_type         = "${var.ecs_asg_health_check_type}"
+  min_size                  = "${var.ecs_asg_min_size}"
+  max_size                  = "${var.ecs_asg_max_size}"
+  desired_capacity          = "${var.ecs_asg_desired_capacity}"
+  wait_for_capacity_timeout = "${var.ecs_asg_wait_for_capacity_timeout}"
 
   tags = [
     {

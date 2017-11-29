@@ -238,3 +238,63 @@ variable "ecs_user_data_efs_owner" {
   description = "EFS mount point owner on the ECS instance"
   default     = ""
 }
+
+variable "ecs_lc_image_id" {
+  description = "The AMI image ID for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_instance_type" {
+  description = "The EC2 instance type for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_data_block_device_name" {
+  description = "The name of the EBS data block device for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_data_block_device_type" {
+  description = "The type of the EBS data block device for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_data_block_device_size" {
+  description = "The size (GB) of the EBS data block device for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_root_device_type" {
+  description = "The type of the root block device for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_lc_root_device_size" {
+  description = "The size of the root block device for the ECS instance"
+  default     = ""
+}
+
+variable "ecs_asg_health_check_type" {
+  description = "Controls how health checking is done (EC2 or ELB)"
+  default     = ""
+}
+
+variable "ecs_asg_min_size" {
+  description = "The minimum size of the auto scale group"
+  default     = ""
+}
+
+variable "ecs_asg_max_size" {
+  description = "The maximum size of the auto scale group"
+  default     = ""
+}
+
+variable "ecs_asg_desired_capacity" {
+  description = "The number of Amazon EC2 instances that should be running in the group"
+  default     = ""
+}
+
+variable "ecs_asg_wait_for_capacity_timeout" {
+  description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
+  default     = ""
+}

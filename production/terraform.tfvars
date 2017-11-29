@@ -64,12 +64,32 @@ jenkins_elb_cookie_expiration_period = "3600"
 # ECS
 ecs_cluster_name = "jenkins-cluster"
 
+# ECS - task
 ecs_task_family           = "jenkins-master"
 ecs_task_network_mode     = "bridge"
 ecs_task_volume_name      = "data-volume"
 ecs_task_volume_host_path = "/data/"
-ecs_task_image            = "DockerImage"
+ecs_task_image            = "jenkins/jenkins:lts"
 ecs_task_container_path   = "/var/jenkins_home"
 
+# ECS - template for user_data
 ecs_user_data_efs_mountpoint = "/data"
 ecs_user_data_efs_owner      = "1000"
+
+# ECS - launch configuration
+ecs_lc_image_id      = "ami-6e56780b"
+ecs_lc_instance_type = "t2.micro"
+
+ecs_lc_data_block_device_name = "/dev/xvdz"
+ecs_lc_data_block_device_type = "gp2"
+ecs_lc_data_block_device_size = "24"
+
+ecs_lc_root_device_type = "gp2"
+ecs_lc_root_device_size = "12"
+
+# ECS - auto scaling group
+ecs_asg_health_check_type         = "EC2"
+ecs_asg_min_size                  = "2"
+ecs_asg_max_size                  = "5"
+ecs_asg_desired_capacity          = "2"
+ecs_asg_wait_for_capacity_timeout = "0"
