@@ -8,10 +8,10 @@ resource "aws_security_group" "this" {
 
   # Bastion SSH Ingress Rule
   ingress {
-    from_port   = "${var.ssh_port}"
-    to_port     = "${var.ssh_port}"
-    protocol    = "tcp"
-    cidr_blocks = ["${var.external_subnet_range}"]
+    from_port       = "${var.ssh_port}"
+    to_port         = "${var.ssh_port}"
+    protocol        = "tcp"
+    security_groups = ["${var.bastion_security_group}"]
   }
 
   # Jenkins WEB Ingress Rule

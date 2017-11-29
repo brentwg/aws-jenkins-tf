@@ -9,7 +9,4 @@ variable "ssh_port" {}
 variable "jenkins_web_port" {}
 variable "jenkins_jnlp_port" {}
 
-variable "external_subnet_range" {
-  type    = "list"
-  default = []
-}
+variable "bastion_security_group" {}
