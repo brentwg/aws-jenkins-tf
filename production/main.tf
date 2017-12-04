@@ -472,7 +472,24 @@ resource "aws_autoscaling_policy" "jenkins_scale_up_policy" {
 # ------------------------------
 # Jenkins Cluster Scale Up Alarm
 # ------------------------------
+resource "aws_cloudwatch_metric_alarm" "jenkins_scale_up_alarm" {
+  alarm_name        = "${var.customer_name}_${var.environment}_jenkins_scale_up_alarm"
+  alarm_description = "CPU utilization peaked at 70% during the last minute"
+  alarm_actions     = ["${aws_autoscaling_policy.jenkins_scale_up_policy.arn}"]
 
+  dimensions {
+    ClusterName = "jenkins-cluster"
+  }
+
+  metric_name         = "CPUReservation"
+  namespace           = "AWS/ECS"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  statistic           = "Maximum"
+  threshold           = "70"
+  period              = "60"
+  evaluation_periods  = "1"
+  treat_missing_data  = "notBreaching"
+}
 
 
 # ---------------------------------
@@ -490,11 +507,31 @@ resource "aws_autoscaling_policy" "jenkins_scale_down_policy" {
 # --------------------------------
 # Jenkins Cluster Scale Down Alarm
 # --------------------------------
+resource "aws_cloudwatch_metric_alarm" "jenkins_scale_down_alarm" {
+  alarm_name        = "${var.customer_name}_${var.environment}_jenkins_scale_down_alarm"
+  alarm_description = "CPU utilization is under 50% for the last 10 min..."
+  alarm_actions     = ["${aws_autoscaling_policy.jenkins_scale_down_policy.arn}"]
 
+  dimensions {
+    ClusterName = "jenkins-cluster"
+  }
+
+  metric_name         = "CPUReservation"
+  namespace           = "AWS/ECS"
+  comparison_operator = "LessThanThreshold"
+  statistic           = "Maximum"
+  threshold           = "50"
+  period              = "600"
+  evaluation_periods  = "1"
+  treat_missing_data  = "notBreaching"
+}
 
 
 
 # ------------------------
 # OUTPUT - Jenkins ELB URL
 # ------------------------
-
+output "jenkins_url" {
+  description = "Jenkins URL"
+  value       = "${formatlist("http://%s",module.jenkins_elb.jenkins_elb_dns_name)}"
+}
