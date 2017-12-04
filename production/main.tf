@@ -454,8 +454,19 @@ module "asg" {
 # -------------------------------
 # Jenkins Cluster Scale Up Policy
 # -------------------------------
+resource "aws_autoscaling_policy" "jenkins_scale_up_policy" {
+  name                      = "${var.customer_name}_${var.environment}_jenkins_scale_up_policy"
+  adjustment_type           = "ChangeInCapacity"
+  autoscaling_group_name    = "${module.asg.this_autoscaling_group_name}"
+  estimated_instance_warmup = "60"
+  metric_aggregation_type   = "Average"
+  policy_type               = "StepScaling"
 
-
+  step_adjustment {
+    metric_interval_lower_bound = "0"
+    scaling_adjustment          = "2"
+  }
+}
 
 
 # ------------------------------
@@ -467,7 +478,13 @@ module "asg" {
 # ---------------------------------
 # Jenkins Cluster Scale Down Policy
 # ---------------------------------
-
+resource "aws_autoscaling_policy" "jenkins_scale_down_policy" {
+  name                      = "${var.customer_name}_${var.environment}_jenkins_scale_down_policy"
+  adjustment_type           = "PercentChangeInCapacity"
+  autoscaling_group_name    = "${module.asg.this_autoscaling_group_name}"
+  cooldown                  = "120"
+  scaling_adjustment          = "-50"
+}
 
 
 # --------------------------------
