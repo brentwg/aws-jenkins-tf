@@ -527,7 +527,6 @@ resource "aws_cloudwatch_metric_alarm" "jenkins_scale_down_alarm" {
 }
 
 
-
 # ------------------------
 # OUTPUT - Jenkins ELB URL
 # ------------------------
