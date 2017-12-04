@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Add instance to the ECS cluster
-echo "Adding instance to the ECS cluster"
-echo "ECS_CLUSTER=${ecs_cluster_name}" >> /etc/ecs/ecs.config
-
 # Update YUM repo
 yum check-update
 
@@ -45,3 +41,13 @@ if [ $? -eq 0 ]; then
 else
   echo "${efs_filesystem_id}.efs.${aws_region}.amazonaws.com:/ ${efs_mountpoint} nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
 fi
+
+# Add instance to the ECS cluster
+echo "Adding instance to the ECS cluster"
+echo "ECS_CLUSTER=${ecs_cluster_name}" >> /etc/ecs/ecs.config
+
+# Restart ECS and Docker
+#echo "Restarting ECS and Docker"
+#sudo stop ecs
+#sudo service docker restart
+#sudo start ecs

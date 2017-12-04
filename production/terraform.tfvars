@@ -69,7 +69,7 @@ ecs_task_family           = "jenkins-master"
 ecs_task_network_mode     = "bridge"
 ecs_task_volume_name      = "data-volume"
 ecs_task_volume_host_path = "/data/"
-ecs_task_image            = "jenkins/jenkins:lts"
+ecs_task_image            = "ticketfly/jenkins-example-aws-ecs"
 ecs_task_container_path   = "/var/jenkins_home"
 
 # ECS - template for user_data

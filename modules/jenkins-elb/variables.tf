@@ -38,27 +38,27 @@ variable "ext_web_port" {
 
 variable "elb_health_target" {
   description = ""
-  default     = "HTTP:80/"
+  default     = "HTTP:8080/login"
 }
 
 variable "elb_health_interval" {
   description = ""
-  default     = "30"
+  default     = "20"
 }
 
 variable "elb_health_healthy_threshold" {
   description = ""
-  default     = "2"
+  default     = "3"
 }
 
 variable "elb_health_unhealthy_threshold" {
   description = ""
-  default     = "2"
+  default     = "10"
 }
 
 variable "elb_health_timeout" {
   description = ""
-  default     = "5"
+  default     = "2"
 }
 
 variable "elb_cookie_expiration_period" {

@@ -312,8 +312,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   network_mode = "${var.ecs_task_network_mode}"
   
   volume {
-    name      = "${var.ecs_task_volume_name}"
-    host_path = "${var.ecs_task_volume_host_path}"
+    name      = "data-volume"
+    host_path = "/data/"
   }
 
   container_definitions = <<EOF
@@ -323,8 +323,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
     "image": "${var.ecs_task_image}",
     "mountPoints": [
       {
-        "sourceVolume": "${var.ecs_task_volume_name}",
-        "containerPath": "${var.ecs_task_container_path}"
+        "sourceVolume": "data-volume",
+        "containerPath": "/var/jenkins_home"
       }
     ],
     "essential": true,
