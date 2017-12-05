@@ -37,7 +37,7 @@ data "aws_route53_zone" "my_domain" {
 # VPC
 # ---
 module "vpc" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v1.3.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v1.5.1"
 
   name                = "${var.vpc_name}"
   cidr                = "${var.vpc_cidr}"
