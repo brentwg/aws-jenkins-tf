@@ -279,7 +279,7 @@ module "jenkins_elb" {
 
   customer_name       = "${var.customer_name}"
   environment         = "${var.environment}"
-  elb_subnets         = ["${module.vpc.private_subnets}"]
+  elb_subnets         = ["${module.vpc.public_subnets}"]
   elb_security_groups = ["${module.jenkins_elb_security_group.jenkins_elb_security_group_id}"]
   int_web_port        = "${var.jenkins_web_port}"
   ext_web_port        = "${var.jenkins_ext_web_port}"
@@ -312,8 +312,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   network_mode = "${var.ecs_task_network_mode}"
   
   volume {
-    name      = "data-volume"
-    host_path = "/data/"
+    name      = "${var.ecs_task_volume_name}"
+    host_path = "${var.ecs_task_volume_host_path}"
   }
 
   container_definitions = <<EOF
@@ -323,8 +323,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
     "image": "${var.ecs_task_image}",
     "mountPoints": [
       {
-        "sourceVolume": "data-volume",
-        "containerPath": "/var/jenkins_home"
+        "sourceVolume": "${var.ecs_task_volume_name}",
+        "containerPath": "${var.ecs_task_container_path}"
       }
     ],
     "essential": true,
@@ -352,7 +352,7 @@ EOF
 # Jenkins ECS Service
 # -------------------
 resource "aws_ecs_service" "ecs_service" {
-  name            = "jenkins_service"
+  name            = "${var.ecs_cluster_name}"
   cluster         = "${aws_ecs_cluster.ecs_cluster.id}"
   task_definition = "${aws_ecs_task_definition.ecs_task_definition.arn}"
   desired_count   = "1"
@@ -447,8 +447,6 @@ module "asg" {
     },
   ]
 }
-
-
 
 
 # -------------------------------
