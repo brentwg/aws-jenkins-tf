@@ -386,7 +386,7 @@ data "template_file" "user_data_jenkins_ecs" {
 module "asg" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git?ref=v2.0.0"
 
-  name = "jenkins-asg_with_elb"
+  name = "jenkins-asg_instance"
 
   # Launch Configuration
   lc_name              = "${var.customer_name}-${var.environment}_ecs_launch_configuration"
@@ -420,7 +420,6 @@ module "asg" {
   ]
 
 # Auto scaling group
-  name                      = "${var.customer_name}_${var.environment}_asg"
   asg_name                  = "${var.customer_name}_${var.environment}_asg"
   vpc_zone_identifier       = ["${module.vpc.private_subnets}"]
   health_check_type         = "${var.ecs_asg_health_check_type}"
