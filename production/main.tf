@@ -300,6 +300,21 @@ module "jenkins_elb" {
 }
 
 
+# --------------------------------
+# Jenkins ELB Route53 Alias Record
+# --------------------------------
+resource "aws_route53_record" "jenkins_brentwg_com" {
+  zone_id = "${data.aws_route53_zone.my_domain.zone_id}"
+  name    = "jenkins.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = "${module.jenkins_elb.jenkins_elb_dns_name}"
+    zone_id                = "${module.jenkins_elb.elb_zone_id}"
+    evaluate_target_health = true
+  }
+}
+
 
 /*
   NOTE: All of the ECS resources should be in their own module. But I require
