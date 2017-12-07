@@ -1,4 +1,5 @@
 aws.env.*
 .terraform
+terraform.tfvars
 terraform.tfstate
 *.tfstate*
