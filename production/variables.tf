@@ -178,6 +178,10 @@ variable "jenkins_ext_web_port" {
   default     = "80"
 }
 
+variable "jenkins_ext_ssl_port" {
+  description = "Default SSL port for Jenkins web services"
+  default     = "443"
+}
 
 # EFS
 variable "efs_port" {

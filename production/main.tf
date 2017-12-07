@@ -239,6 +239,7 @@ module "jenkins_elb_security_group" {
   environment           = "${var.environment}"
   vpc_id                = "${module.vpc.vpc_id}"
   jenkins_ext_web_port  = "${var.jenkins_ext_web_port}"
+  jenkins_ext_ssl_port  = "${var.jenkins_ext_ssl_port}"
 }
 
 

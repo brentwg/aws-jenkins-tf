@@ -14,6 +14,14 @@ resource "aws_security_group" "this" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # Jenkins EXT SSL Ingress Rule
+  ingress {
+    from_port   = "${var.jenkins_ext_ssl_port}"
+    to_port     = "${var.jenkins_ext_ssl_port}"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Default Egress Rule
   egress {
     from_port   = "0"
