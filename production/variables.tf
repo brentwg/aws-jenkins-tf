@@ -334,3 +334,102 @@ variable "scale_up_scaling_adjustment" {
   description = "The number of instances by which to scale"
   default     = ""
 }
+
+
+variable "scale_down_adjustment_type" {
+  description = "Specifies whether the adjustment is an absolute number or a percentage of the current capacity"
+  default     = ""
+}
+
+variable "scale_down_cooldown" {
+  description = "The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start"
+  default     = ""
+}
+
+variable "scale_down_scaling_adjustment" {
+  description = ""
+  default     = "The percentage of instances by which to scale down"
+}
+
+
+# CloudWatch Alarms
+variable "scale_up_alarm_metric_name" {
+  description = "The name for the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_up_alarm_namespace" {
+  description = "The namespace for the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_up_alarm_comparison_operator" {
+  description = "The arithmetic operation to use when comparing the specified Statistic and Threshold"
+  default     = ""
+}
+
+variable "scale_up_alarm_statistic" {
+  description = "The statistic to apply to the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_up_alarm_threshold" {
+  description = "The value against which the specified statistic is compared"
+  default     = ""
+}
+
+variable "scale_up_alarm_period" {
+  description = "The period in seconds over which the specified statistic is applied"
+  default     = ""
+}
+
+variable "scale_up_alarm_evaluation_periods" {
+  description = "The number of periods over which data is compared to the specified threshold"
+  default     = ""
+}
+
+variable "scale_up_alarm_treat_missing_data" {
+  description = "Sets how this alarm is to handle missing data points"
+  default     = ""
+}
+
+
+variable "scale_down_alarm_metric_name" {
+  description = "The name for the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_down_alarm_namespace" {
+  description = "The namespace for the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_down_alarm_comparison_operator" {
+  description = "The arithmetic operation to use when comparing the specified Statistic and Threshold"
+  default     = ""
+}
+
+variable "scale_down_alarm_statistic" {
+  description = "The statistic to apply to the alarm's associated metric"
+  default     = ""
+}
+
+variable "scale_down_alarm_threshold" {
+  description = "The value against which the specified statistic is compared"
+  default     = ""
+}
+
+variable "scale_down_alarm_period" {
+  description = "The period in seconds over which the specified statistic is applied"
+  default     = ""
+}
+
+variable "scale_down_alarm_evaluation_periods" {
+  description = "The number of periods over which data is compared to the specified threshold"
+  default     = ""
+}
+
+variable "scale_down_alarm_treat_missing_data" {
+  description = "Sets how this alarm is to handle missing data points"
+  default     = ""
+}

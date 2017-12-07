@@ -507,14 +507,14 @@ module "jenkins_scale_up_alarm" {
     ClusterName = "${var.ecs_cluster_name}"
   }
 
-  metric_name         = "CPUReservation"
-  namespace           = "AWS/ECS"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  statistic           = "Maximum"
-  threshold           = "70"
-  period              = "60"
-  evaluation_periods  = "1"
-  treat_missing_data  = "notBreaching"
+  metric_name         = "${var.scale_up_alarm_metric_name}"
+  namespace           = "${var.scale_up_alarm_namespace}"
+  comparison_operator = "${var.scale_up_alarm_comparison_operator}"
+  statistic           = "${var.scale_up_alarm_statistic}"
+  threshold           = "${var.scale_up_alarm_threshold}"
+  period              = "${var.scale_up_alarm_period}"
+  evaluation_periods  = "${var.scale_up_alarm_evaluation_periods}"
+  treat_missing_data  = "${var.scale_up_alarm_treat_missing_data}"
 }
 
 
@@ -523,10 +523,10 @@ module "jenkins_scale_up_alarm" {
 # ---------------------------------
 resource "aws_autoscaling_policy" "jenkins_scale_down_policy" {
   name                      = "${var.customer_name}_${var.environment}_jenkins_scale_down_policy"
-  adjustment_type           = "PercentChangeInCapacity"
+  adjustment_type           = "${var.scale_down_adjustment_type}"
   autoscaling_group_name    = "${module.asg.this_autoscaling_group_name}"
-  cooldown                  = "120"
-  scaling_adjustment          = "-50"
+  cooldown                  = "${var.scale_down_cooldown}"
+  scaling_adjustment        = "${var.scale_down_scaling_adjustment}"
 }
 
 
@@ -544,12 +544,12 @@ module "jenkins_scale_down_alarm" {
     ClusterName = "${var.ecs_cluster_name}"
   }
 
-  metric_name         = "CPUReservation"
-  namespace           = "AWS/ECS"
-  comparison_operator = "LessThanThreshold"
-  statistic           = "Maximum"
-  threshold           = "50"
-  period              = "600"
-  evaluation_periods  = "1"
-  treat_missing_data  = "notBreaching"
+  metric_name         = "${var.scale_down_alarm_metric_name}"
+  namespace           = "${var.scale_down_alarm_namespace}"
+  comparison_operator = "${var.scale_down_alarm_comparison_operator}"
+  statistic           = "${var.scale_down_alarm_statistic}"
+  threshold           = "${var.scale_down_alarm_threshold}"
+  period              = "${var.scale_down_alarm_period}"
+  evaluation_periods  = "${var.scale_down_alarm_evaluation_periods}"
+  treat_missing_data  = "${var.scale_down_alarm_treat_missing_data}"
 }
