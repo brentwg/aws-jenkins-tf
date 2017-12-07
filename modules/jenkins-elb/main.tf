@@ -13,6 +13,14 @@ resource "aws_elb" "this" {
     lb_protocol        = "HTTP"
   }
 
+  listener {
+    instance_port      = "${var.int_web_port}"
+    instance_protocol  = "HTTP"
+    lb_port            = "${var.ext_ssl_port}"
+    lb_protocol        = "HTTPS"
+    ssl_certificate_id = "${var.ssl_certificate_id}"
+  }
+
   health_check {
     target              = "${var.elb_health_target}"
     interval            = "${var.elb_health_interval}"

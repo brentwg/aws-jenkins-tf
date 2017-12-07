@@ -36,6 +36,16 @@ variable "ext_web_port" {
   default     = ""
 }
 
+variable "ext_ssl_port" {
+  description = "ELB port assigned for external SSL communication"
+  default     = ""
+}
+
+variable "ssl_certificate_id" {
+  description = "The ARN of an SSL certificate you have uploaded to AWS IAM"
+  default     = ""
+}
+
 variable "elb_health_target" {
   description = ""
   default     = "HTTP:8080/login"
