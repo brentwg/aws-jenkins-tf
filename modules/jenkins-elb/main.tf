@@ -51,7 +51,7 @@ resource "aws_lb_cookie_stickiness_policy" "this" {
 # ---------------------------
 # ELB Stickiness Policy - SSL
 # ---------------------------
-resource "aws_lb_cookie_stickiness_policy" "this" {
+resource "aws_lb_cookie_stickiness_policy" "this_ssl" {
   name                     = "${var.customer_name}-${var.environment}-elb-stickiness-policy-ssl"
   load_balancer            = "${aws_elb.this.id}"
   lb_port                  = "${var.ext_ssl_port}"
