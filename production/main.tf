@@ -453,15 +453,15 @@ module "asg" {
 # -------------------------------
 resource "aws_autoscaling_policy" "jenkins_scale_up_policy" {
   name                      = "${var.customer_name}_${var.environment}_jenkins_scale_up_policy"
-  adjustment_type           = "ChangeInCapacity"
+  adjustment_type           = "${var.scale_up_adjustment_type}"
   autoscaling_group_name    = "${module.asg.this_autoscaling_group_name}"
-  estimated_instance_warmup = "60"
-  metric_aggregation_type   = "Average"
-  policy_type               = "StepScaling"
+  estimated_instance_warmup = "${var.scale_up_estimated_instance_warmup}"
+  metric_aggregation_type   = "${var.scale_up_metric_aggregation_type}"
+  policy_type               = "${var.scale_up_policy_type}"
 
   step_adjustment {
-    metric_interval_lower_bound = "0"
-    scaling_adjustment          = "2"
+    metric_interval_lower_bound = "${var.scale_up_metric_interval_lower_bound}"
+    scaling_adjustment          = "${var.scale_up_scaling_adjustment}"
   }
 }
 
@@ -469,13 +469,15 @@ resource "aws_autoscaling_policy" "jenkins_scale_up_policy" {
 # ------------------------------
 # Jenkins Cluster Scale Up Alarm
 # ------------------------------
-resource "aws_cloudwatch_metric_alarm" "jenkins_scale_up_alarm" {
+module "jenkins_scale_up_alarm" {
+  source = "git::https://github.com/brentwg/terraform-aws-cloudwatch-alarms.git?ref=1.0"
+
   alarm_name        = "${var.customer_name}_${var.environment}_jenkins_scale_up_alarm"
   alarm_description = "CPU utilization peaked at 70% during the last minute"
   alarm_actions     = ["${aws_autoscaling_policy.jenkins_scale_up_policy.arn}"]
 
-  dimensions {
-    ClusterName = "jenkins-cluster"
+  dimensions = {
+    ClusterName = "${var.ecs_cluster_name}"
   }
 
   metric_name         = "CPUReservation"
@@ -504,13 +506,15 @@ resource "aws_autoscaling_policy" "jenkins_scale_down_policy" {
 # --------------------------------
 # Jenkins Cluster Scale Down Alarm
 # --------------------------------
-resource "aws_cloudwatch_metric_alarm" "jenkins_scale_down_alarm" {
+module "jenkins_scale_down_alarm" {
+  source = "git::https://github.com/brentwg/terraform-aws-cloudwatch-alarms.git?ref=1.0"
+
   alarm_name        = "${var.customer_name}_${var.environment}_jenkins_scale_down_alarm"
   alarm_description = "CPU utilization is under 50% for the last 10 min..."
   alarm_actions     = ["${aws_autoscaling_policy.jenkins_scale_down_policy.arn}"]
 
-  dimensions {
-    ClusterName = "jenkins-cluster"
+  dimensions = {
+    ClusterName = "${var.ecs_cluster_name}"
   }
 
   metric_name         = "CPUReservation"
@@ -521,13 +525,4 @@ resource "aws_cloudwatch_metric_alarm" "jenkins_scale_down_alarm" {
   period              = "600"
   evaluation_periods  = "1"
   treat_missing_data  = "notBreaching"
-}
-
-
-# ------------------------
-# OUTPUT - Jenkins ELB URL
-# ------------------------
-output "jenkins_url" {
-  description = "Jenkins URL"
-  value       = "${formatlist("http://%s",module.jenkins_elb.jenkins_elb_dns_name)}"
 }

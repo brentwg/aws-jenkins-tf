@@ -298,3 +298,35 @@ variable "ecs_asg_wait_for_capacity_timeout" {
   description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
   default     = ""
 }
+
+
+# Cluster Scaling Policies
+variable "scale_up_adjustment_type" {
+  description = "Specifies whether the adjustment is an absolute number or a percentage of the current capacity"
+  default     = ""
+}
+
+variable "scale_up_estimated_instance_warmup" {
+  description = "The estimated time, in seconds, until a newly launched instance will contribute CloudWatch metrics"
+  default     = ""
+}
+
+variable "scale_up_metric_aggregation_type" {
+  description = "The aggregation type for the policy's metrics"
+  default     = ""
+}
+
+variable "scale_up_policy_type" {
+  description = "The policy type, either SimpleScaling or StepScaling"
+  default     = ""
+}
+
+variable "scale_up_metric_interval_lower_bound" {
+  description = " The lower bound for the difference between the alarm threshold and the CloudWatch metric"
+  default     = ""
+}
+
+variable "scale_up_scaling_adjustment" {
+  description = "The number of instances by which to scale"
+  default     = ""
+}

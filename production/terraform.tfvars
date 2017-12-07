@@ -93,3 +93,12 @@ ecs_asg_min_size                  = "2"
 ecs_asg_max_size                  = "5"
 ecs_asg_desired_capacity          = "2"
 ecs_asg_wait_for_capacity_timeout = "0"
+
+# Cluster Scaling Policies
+scale_up_adjustment_type             = "ChangeInCapacity"
+scale_up_estimated_instance_warmup   = "60"
+scale_up_metric_aggregation_type     = "Average"
+scale_up_policy_type                 = "StepScaling"
+scale_up_metric_interval_lower_bound = "0"
+scale_up_scaling_adjustment          = "2"
+
