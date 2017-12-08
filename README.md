@@ -100,5 +100,7 @@ This code created the following AWS resouces:
 - Scale up/down policies  
 - [Cloudwatch scale up/down alarms](https://github.com/brentwg/terraform-aws-cloudwatch-alarms.git)  
 
-## AWS VPC Diagram
+## Application Architecture Diagram
 
+[Application architecture diagram](documents/jenkins_diagram.png)  
+Borrowed from the original tutorial.
