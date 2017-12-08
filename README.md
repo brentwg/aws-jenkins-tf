@@ -109,3 +109,4 @@ This code created the following AWS resouces:
 - Upgrade from ELB to ALB  
 - Use spot instances for worker nodes  
 - Swap Jenkins for Concourse CI  
+- Make it DevOps (How to CI/CD your CI/CD tools? Automation testing for deployment?)
