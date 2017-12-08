@@ -102,5 +102,5 @@ This code created the following AWS resouces:
 
 ## Application Architecture Diagram
 
-[Application architecture diagram](documents/jenkins_diagram.png)  
+![Application architecture diagram](documents/jenkins_diagram.png)  
 Borrowed from the original tutorial.
