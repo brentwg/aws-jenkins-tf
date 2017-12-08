@@ -103,4 +103,8 @@ This code created the following AWS resouces:
 ## Application Architecture Diagram
 
 ![Application architecture diagram](documents/jenkins_diagram.png)  
-Borrowed from the original tutorial.
+*Borrowed* from the original tutorial.  
+
+## Improvements for the Next Version
+- Upgrade from ELB to ALB  
+- Use spot instances for worker nodes  
