@@ -81,10 +81,10 @@ terraform desctroy
 ```  
 ## AWS Resources
 This code created the following AWS resouces:  
-- [SSH key pair](https://github.com/terraform-aws-modules/terraform-aws-vpc.git)  
-- VPC  
+- [SSH key pair](https://github.com/brentwg/terraform-aws-key-pair.git)  
+- [VPC](https://github.com/terraform-aws-modules/terraform-aws-vpc.git)  
 - Bastion instance security group  
-- Self-healing Bastion instance  
+- [Self-healing Bastion instance](https://github.com/brentwg/terraform-aws-bastion.git)  
 - ECS Service Role/Policy  
 - EC2 Instance Profile  
 - Jenkins instance security group  
@@ -92,13 +92,13 @@ This code created the following AWS resouces:
 - Jenkins ELB  
 - Jenkins ELB Route53 alias record  
 - EFS security group  
-- EFS  
+- [EFS](https://github.com/brentwg/terraform-aws-efs.git)  
 - Jenkins ECS cluster  
 - Jenkins Master ECS task definition  
 - Jenkins ECS service  
-- ASG (with Jenkins instance launch configuration)  
+- [ASG](https://github.com/terraform-aws-modules/terraform-aws-autoscaling.git) (with Jenkins instance launch configuration)  
 - Scale up/down policies  
-- Cloudwatch scale up/down alarms  
+- [Cloudwatch scale up/down alarms](https://github.com/brentwg/terraform-aws-cloudwatch-alarms.git)  
 
 ## AWS VPC Diagram
 
