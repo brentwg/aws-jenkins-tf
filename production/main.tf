@@ -36,8 +36,8 @@ data "aws_route53_zone" "my_domain" {
 # ---------------------------------
 # Lookup Domain SSl Certificate ARN
 # ---------------------------------
-data "aws_acm_certificate" "brentwg_com" {
-  domain   = "brentwg.com"
+data "aws_acm_certificate" "this" {
+  domain   = "${var.domain_name}"
   statuses = ["ISSUED"]
 }
 
@@ -293,7 +293,7 @@ module "jenkins_elb" {
   int_web_port        = "${var.jenkins_web_port}"
   ext_web_port        = "${var.jenkins_ext_web_port}"
   ext_ssl_port        = "${var.jenkins_ext_ssl_port}"
-  ssl_certificate_id  = "${data.aws_acm_certificate.brentwg_com.arn}"
+  ssl_certificate_id  = "${data.aws_acm_certificate.this.arn}"
   
   elb_cookie_expiration_period = "${var.jenkins_elb_cookie_expiration_period}"
 }
