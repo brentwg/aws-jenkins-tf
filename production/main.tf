@@ -57,7 +57,6 @@ module "vpc" {
   enable_dns_hostnames = "${var.vpc_enable_dns_hostnames}"
   enable_dns_support   = "${var.vpc_enable_dns_support}"
 
-  create_database_subnet_group = "${var.vpc_create_database_subnet_group}"
   enable_nat_gateway           = "${var.vpc_enable_nat_gateway}"
   enable_s3_endpoint           = "${var.vpc_enable_s3_endpoint}"
   enable_dynamodb_endpoint     = "${var.vpc_enable_dynamodb_endpoint}"

@@ -141,11 +141,6 @@ variable "vpc_enable_dns_support" {
   default     = false
 }
 
-variable "vpc_create_database_subnet_group" {
-  description = "Create database subnet group (true/false)"
-  default     = false
-}
-
 variable "vpc_enable_nat_gateway" {
   description = "Enable NAT gateway (true/false)"
   default     = false
