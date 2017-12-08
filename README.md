@@ -80,6 +80,24 @@ To tear everything down, run `terraform destroy` and follow the prompts
 terraform desctroy
 ```  
 ## AWS Resources
-
+This code created the following AWS resouces:  
+- SSH key pair  
+- VPC  
+- Bastion instance security group  
+- Self-healing Bastion instance  
+- ECS Service Role/Policy  
+- EC2 Instance Profile  
+- Jenkins instance security group  
+- Jenkins ELB security group  
+- Jenkins ELB  
+- Jenkins ELB Route53 alias record  
+- EFS security group  
+- EFS  
+- Jenkins ECS cluster  
+- Jenkins Master ECS task definition  
+- Jenkins ECS service  
+- ASG (with Jenkins instance launch configuration)  
+- Scale up/down policies  
+- Cloudwatch scale up/down alarms  
 
 
