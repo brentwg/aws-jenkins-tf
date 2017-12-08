@@ -3,7 +3,7 @@ Terraform files used for orchestrating resources to host a scalable and self-hea
 
 For the entire backstory, see the following great tutorial: [Chapter 4, Run Jenkins Infrastructure on AWS Container Service](https://tech.ticketfly.com/our-journey-to-continuous-delivery-chapter-4-run-jenkins-infrastructure-on-aws-container-service-ef37e0304b95).  
 
-They created basically everything using CloudFormation. I mostly just translated their work to Terraform. Then I added various features, such an self-healing bastion instance, support for HTTPS using the elastic load balancer and a certificate hosted via AWS Certificate Manager, and I've encrypted my AWS credentials using a simple Unix program called `pass`.  
+They created basically everything using CloudFormation. I mostly just translated their work to Terraform. Then I added various features, such as a self-healing bastion instance, support for HTTPS using the elastic load balancer and a certificate hosted via AWS Certificate Manager, and I've encrypted my AWS credentials using a simple Unix program called `pass`.  
 
 In addition, instead of using the `ticketfly/jenkins-example-aws-ecs` Docker image, I wanted to use the official `jenkins/jenkins:lts` image. But you could use whatever Jenkins image you like.  
 ## Dependencies
