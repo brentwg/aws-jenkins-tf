@@ -81,7 +81,7 @@ terraform desctroy
 ```  
 ## AWS Resources
 This code created the following AWS resouces:  
-- SSH key pair  
+- [SSH key pair](https://github.com/terraform-aws-modules/terraform-aws-vpc.git)  
 - VPC  
 - Bastion instance security group  
 - Self-healing Bastion instance  
@@ -100,4 +100,5 @@ This code created the following AWS resouces:
 - Scale up/down policies  
 - Cloudwatch scale up/down alarms  
 
+## AWS VPC Diagram
 
