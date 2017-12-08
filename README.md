@@ -1,11 +1,11 @@
 # AWS - Terraform for Jenkins (ECS)  
 Terraform files used for orchestrating resources to host a scalable and self-healing Jenkins environment using ECS in AWS.  
 
-For backstory, see the following tutorial: [Chapter 4, Run Jenkins Infrastructure on AWS Container Service](https://tech.ticketfly.com/our-journey-to-continuous-delivery-chapter-4-run-jenkins-infrastructure-on-aws-container-service-ef37e0304b95).  
+For the entire backstory, see the following great tutorial: [Chapter 4, Run Jenkins Infrastructure on AWS Container Service](https://tech.ticketfly.com/our-journey-to-continuous-delivery-chapter-4-run-jenkins-infrastructure-on-aws-container-service-ef37e0304b95).  
 
-They created basically everything using CloudFormation. I translated their work to Terraform. And then I added various features, such an self-healing bastion instance, and support for HTTPS via the elastic load balancer and a certificate hosted via AWS Certificate Manager.  
+They created basically everything using CloudFormation. I mostly just translated their work to Terraform. And then I added various features, such an self-healing bastion instance, and support for HTTPS using the elastic load balancer and a certificate hosted via AWS Certificate Manager.  
 
-In addition, instead of using the `ticketfly/jenkins-example-aws-ecs` Docker image, I used `jenkins/jenkins:lts`. But you could use whatever Jenkins image you like.  
+In addition, instead of using the `ticketfly/jenkins-example-aws-ecs` Docker image, I wanted to use the official `jenkins/jenkins:lts` image. But you could use whatever Jenkins image you like.  
 ## Dependencies
 See my [Terraform AWS EC2 Bastion Server module](https://github.com/brentwg/terraform-aws-bastion) and [Packer - AWS Bation AMI](https://github.com/brentwg/packer-aws-bastion) for a listing of resources that will be required to `terraform apply` the source code in this repository.  
 
