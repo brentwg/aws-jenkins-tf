@@ -111,3 +111,5 @@ This code created the following AWS resouces:
 - Use spot instances for worker nodes  
 - Swap Jenkins for Concourse CI  
 - Make it DevOps (How to CI/CD your CI/CD tools? Automation testing for deployment?)
+- Set up remote state using a "Cloud" bucket
+- Translate from AWS to both GCP and Azure
