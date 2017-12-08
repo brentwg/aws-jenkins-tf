@@ -15,7 +15,7 @@ Basic things you will require:
 - Your own SSL certificate (already registered with AWS Certificate Manager)  
 
 ### Cost
-Please note that some of the below-listed resources do NOT qualify for the free tier. However, according to the original tutorial, the cost to run this infrastructure costs ~$0.10/hour. (Your mileage may vary.)  
+Please note that some of the below-listed resources do NOT qualify for the free tier. However, according to the original tutorial, the cost to run this infrastructure is ~$0.10/hour. (2017 money. Your mileage may vary.)  
 
 ### AWS Credentials
 To manage AWS credential, I use a program called `pass`. For more information about `pass` see the following link:  
