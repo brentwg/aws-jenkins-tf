@@ -1,2 +1,85 @@
 # AWS - Terraform for Jenkins (ECS)  
-Terraform files used for orchestrating resources to host Jenkins using ECS in AWS.  
+Terraform files used for orchestrating resources to host a scalable and self-healing Jenkins environment using ECS in AWS.  
+
+For backstory, see the following tutorial: [Chapter 4, Run Jenkins Infrastructure on AWS Container Service](https://tech.ticketfly.com/our-journey-to-continuous-delivery-chapter-4-run-jenkins-infrastructure-on-aws-container-service-ef37e0304b95).  
+
+They created basically everything using CloudFormation. I translated their work to Terraform. And then I added various features, such an self-healing bastion instance, and support for HTTPS via the elastic load balancer and a certificate hosted via AWS Certificate Manager.  
+
+In addition, instead of using the `ticketfly/jenkins-example-aws-ecs` Docker image, I used `jenkins/jenkins:lts`. But you could use whatever Jenkins image you like.  
+## Dependencies
+See my [Terraform AWS EC2 Bastion Server module](https://github.com/brentwg/terraform-aws-bastion) and [Packer - AWS Bation AMI](https://github.com/brentwg/packer-aws-bastion) for a listing of resources that will be required to `terraform apply` the source code in this repository.  
+
+Basic things you will require:  
+- An AWS account (which includes creating API key credentials)
+- Your own domain (already registered with AWS Route53)  
+- Your own SSL certificate (already registered with AWS Certificate Manager)  
+
+### Cost
+Please note that some of the below-listed resources do NOT qualify for the free tier. However, according to the original tutorial, the cost to run this infrastructure costs ~$0.10/hour. (Your mileage may vary.)  
+
+### AWS Credentials
+To manage AWS credential, I use a program called `pass`. For more information about `pass` see the following link:  
+- [The Standard Unix Password Manager: Pass](https://www.passwordstore.org/)  
+
+The `aws.env` file queries `pass` and sets environment variables for the following information:  
+```
+AWS Access Key (for both the AWS cli and Terraform)
+AWS Secret Key (for both the AWS cli and Terraform)
+AWS Region
+Domain Name
+Default Date Format
+```  
+
+## Quickstart
+Step 1:  
+Modify the `aws.env` file to match your own environment. The information you'll need to configure is:  
+- your access key  
+- your secret key  
+- the AWS region you wish to use  
+- the domain name you registered with AWS Route53  
+
+Step 2:  
+Source your `aws.env` file
+```
+source aws.env
+```  
+
+Step 3:  
+Navigate to the `production` folder and create your own `terraform.tfvars` file as follows  
+```
+cd production
+cp terraform.tfvars-sample terraform.tfvars
+```  
+
+Step 4:  
+Modify `terraform.tfvars` to match your AWS environment  
+
+Step 5:  
+Initialize Terraform  
+```
+terraform init
+terraform get -update
+```  
+
+Step 6:  
+Run `terraform plan` to ensure that you have no errors  
+```
+terraform plan
+```  
+
+Step 7:  
+To create all of the AWS resources, run `terraform apply`  
+```
+terraform apply
+```  
+
+(Optional)  
+Step 5:
+To tear everything down, run `terraform destroy` and follow the prompts  
+```
+terraform desctroy
+```  
+## AWS Resources
+
+
+
