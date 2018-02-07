@@ -18,7 +18,7 @@ Basic things you will require:
 Please note that some of the below-listed resources do NOT qualify for the free tier. However, according to the original tutorial, the cost to run this infrastructure is ~$0.10/hour. (2017 money. Your mileage may vary.)  
 
 ### AWS Credentials
-To manage AWS credential, I use a program called `pass`. For more information about `pass` see the following link:  
+To manage AWS credentials, I use a program called `pass`. For more information about `pass` see the following link:  
 - [The Standard Unix Password Manager: Pass](https://www.passwordstore.org/)  
 
 The `aws.env` file queries `pass` and sets environment variables for the following information:  
